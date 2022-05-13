@@ -14,9 +14,10 @@ fun App() {
 
     Button(onClick = {
         text = "Hello, ${getPlatformName()}"
+        openFileDialog()
     }) {
         Text(text)
     }
-
-
 }
+
+expect fun openFileDialog()
