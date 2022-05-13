@@ -4,20 +4,26 @@ import androidx.compose.material.Text
 import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 
 @Composable
 fun App() {
     var text by remember { mutableStateOf("Hello, World!") }
+    var isDialogVisible by remember { mutableStateOf(false) }
 
     Button(onClick = {
         text = "Hello, ${getPlatformName()}"
-        openFileDialog()
+        isDialogVisible = true
     }) {
         Text(text)
     }
+
+    if (isDialogVisible) {
+        openFileDialog()
+    }
 }
 
+@Composable
 expect fun openFileDialog()

@@ -1,10 +1,9 @@
 package me.alexa.common
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.awt.ComposeWindow
 import java.awt.FileDialog
-import java.io.File
 
 @Preview
 @Composable
@@ -12,30 +11,21 @@ fun AppPreview() {
     App()
 }
 
+@Composable
 actual fun openFileDialog() {
-    println("ahahah desktop")
-}
+    var result by remember { mutableStateOf("") }
+    val allowedExtensions = listOf(".jpg")
 
-//openFileDialog(window, "titless", listOf(".jpg"))
-fun openFileDialog(
-    window: ComposeWindow,
-    title: String,
-    allowedExtensions: List<String>,
-    allowMultiSelection: Boolean = true,
-): Set<File> {
-    return FileDialog(window, title, FileDialog.LOAD).apply {
-        isMultipleMode = allowMultiSelection
+    LaunchedEffect(key1 = result) {
+        result = FileDialog(ComposeWindow(), "rt", FileDialog.LOAD).apply {
+            isMultipleMode = false
 
-        // windows
-        file = allowedExtensions.joinToString(";") { "*$it" } // e.g. '*.jpg'
+            // windows
+            file = allowedExtensions.joinToString(";") { "*$it" } // e.g. '*.jpg'
 
-        // linux
-        setFilenameFilter { _, name ->
-            allowedExtensions.any {
-                name.endsWith(it)
-            }
-        }
-
-        isVisible = true
-    }.files.toSet()
+            // linux
+            setFilenameFilter { _, name -> allowedExtensions.any { name.endsWith(it) } }
+            isVisible = true
+        }.files.toSet().firstOrNull()?.name ?: ""
+    }
 }
