@@ -8,12 +8,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import java.io.File
+import java.io.InputStream
 
 @Composable
 fun App() {
     var text by remember { mutableStateOf("Hello, World!") }
     var isDialogVisible by remember { mutableStateOf(false) }
-    var fileName by remember { mutableStateOf<File?>(null) }
+    var file by remember { mutableStateOf<InputStream?>(null) }
 
     Column {
         Button(onClick = {
@@ -23,13 +24,14 @@ fun App() {
             Text(text)
         }
 
-        Text(text = fileName?.name ?: "nothing to show", modifier = Modifier.padding(16.dp))
+        Text(text = if (file != null) "file found" else "nothing to show", modifier = Modifier.padding(16.dp))
     }
 
 
     if (isDialogVisible) {
-        openFileDialog(allowedExtensions = listOf(".*"), onResult = {
-            fileName = it
+        openFileDialog(allowedExtensions = listOf(".*"), onResult = { uri, instream ->
+            file = instream
+            instream?.bufferedReader()?.forEachLine { println(it) }
         })
     }
 

@@ -1,9 +1,8 @@
 package me.alexa.common
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import java.io.File
+import java.io.InputStream
+import java.net.URI
 
 expect fun getPlatformName(): String
 
-expect fun openFileDialog(allowedExtensions: List<String>, onResult: (File?) -> Unit)
+expect fun openFileDialog(allowedExtensions: List<String>, onResult: (URI?, InputStream?) -> Unit)
