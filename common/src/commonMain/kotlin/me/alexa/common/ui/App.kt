@@ -1,21 +1,18 @@
-package me.alexa.common
+package me.alexa.common.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
 import androidx.compose.material.Button
-import androidx.compose.runtime.*
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.update
-import java.io.InputStream
-import java.net.URI
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.flow.asStateFlow
+import me.alexa.common.openFileDialog
+import me.alexa.common.viewmodel.ExampleViewModel
 
 @Composable
 fun App() {
@@ -40,7 +37,6 @@ fun App() {
         )
     }
 
-
     if (state.isDialogVisible) {
         openFileDialog(allowedExtensions = listOf(".*"), onResult = { uri, instream ->
             viewModel.updateFile(uri, instream)
@@ -48,28 +44,3 @@ fun App() {
     }
 }
 
-class ExampleViewModel {
-
-    val uiState = MutableStateFlow(State(text = "init text", content = "no content", isDialogVisible = false))
-
-
-    fun onButtonClicked() {
-        uiState.update { it.copy(text = "new Text", isDialogVisible = true) }
-    }
-
-    fun updateFile(uri: URI?, instream: InputStream?) {
-        val result: String? = instream?.bufferedReader().use { it?.readText() }
-        uiState.update {
-            it.copy(
-                text = uri.toString(),
-                content = result.orEmpty()
-            )
-        }
-    }
-}
-
-data class State(
-    val text: String,
-    val content: String,
-    val isDialogVisible: Boolean,
-)

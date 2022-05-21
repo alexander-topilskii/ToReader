@@ -1,6 +1,6 @@
 package me.alexa.android
 
-import me.alexa.common.App
+import me.alexa.common.ui.App
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
