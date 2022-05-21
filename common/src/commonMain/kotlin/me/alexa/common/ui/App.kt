@@ -1,8 +1,11 @@
 package me.alexa.common.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,8 +37,12 @@ fun App() {
 
         Text(
             text = state.content,
-            modifier = Modifier.background(Color.Gray).padding(16.dp)
+            modifier = Modifier
+                .background(Color.Gray)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState(0))
         )
+
     }
 
     displayDialog(state, viewModel)
