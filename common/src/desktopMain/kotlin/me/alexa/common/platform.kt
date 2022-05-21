@@ -2,7 +2,6 @@ package me.alexa.common
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.awt.ComposeWindow
-import com.sun.jndi.toolkit.url.Uri
 import java.awt.FileDialog
 import java.io.InputStream
 import java.net.URI
