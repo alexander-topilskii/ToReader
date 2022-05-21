@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import me.alexa.common.domain.State
 import me.alexa.common.openFileDialog
 import me.alexa.common.viewmodel.ExampleViewModel
 
@@ -37,6 +38,11 @@ fun App() {
         )
     }
 
+    displayDialog(state, viewModel)
+}
+
+@Composable
+private fun displayDialog(state: State, viewModel: ExampleViewModel) {
     if (state.isDialogVisible) {
         openFileDialog(allowedExtensions = listOf(".*"), onResult = { uri, instream ->
             viewModel.updateFile(uri, instream)
