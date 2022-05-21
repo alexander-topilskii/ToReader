@@ -11,4 +11,5 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0")
 }
